@@ -1,0 +1,5 @@
+# PyCharm preferences
+.idea/
+
+# MacOS finder files
+.DS_Store
