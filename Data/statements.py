@@ -1,19 +1,21 @@
 # Simple program that tries out the financialmodelprep API.
-
 import requests
 
-statements = {'1':"income-statement", '2':"balance-sheet-statement", 
-              '3':"cash-flow-statement"}
-company = input("Enter the ticker for the company. (ex: AAPL): ")
-statement_n = input("Enter the type of statement you would like (1 for income, 2 for balance sheet, 3 for cash flow): ")
+def income_statement(ticker):        
+    url = "https://financialmodelingprep.com/api/v3/financials/income-statement/" + ticker
+    resp = requests.get(url=url)
+    output = resp.json()
+    return output['financials']
 
-url = "https://financialmodelingprep.com/api/v3/financials/" + statements[statement_n] + "/" + company
-print(url)
+def balance_sheet(ticker):
+    url = "https://financialmodelingprep.com/api/v3/financials/balance-sheet-statement/" + ticker
+    resp = requests.get(url=url)
+    output = resp.json()
+    return output['financials']
 
-resp = requests.get(url=url) 
-output = resp.json()
-print(output["symbol"])
-for entry in output["financials"]:
-    print(entry)
-    print("------------------------")
+def cash_flow(ticker):
+    url = "https://financialmodelingprep.com/api/v3/financials/cash-flow-statement/" + ticker
+    resp = requests.get(url=url)
+    output = resp.json()
+    return output['financials']
 
