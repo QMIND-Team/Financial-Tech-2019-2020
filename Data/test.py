@@ -1,6 +1,6 @@
 import statements as statements
 
-result = statements.balance_sheet('AES')
+result = statements.sector_info()
 for entry in result:
     print(entry)
     print("-------------")

@@ -20,15 +20,17 @@ def cash_flow(ticker):
     output = resp.json()
     return output['financials']
 
+#start and end are formatted as yyyy-mm-dd
 def stock_price(ticker, start, end):
-    url = "https://financialmodelingprep.com/api/v3/financials/cash-flow-statement/" + ticker
-    resp = requests.get(url=url, params=statement_params)
+    url = "https://financialmodelingprep.com/api/v3/historical-price-full/" + ticker
+    time_param = {'from': start, 'to': end}
+    resp = requests.get(url=url, params=time_param)
     output = resp.json()
-    return output['financials']
+    return output['historical']
 
 def sector_info():
     url = "https://financialmodelingprep.com/api/v3/stock/sectors-performance"
     resp = requests.get(url=url)
     output = resp.json()
-    return output
+    return output['sectorPerformance']
 
