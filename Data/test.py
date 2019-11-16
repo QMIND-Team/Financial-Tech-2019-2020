@@ -6,7 +6,7 @@ for entry in result:
     print(entry)
     print("-------------")
 
-"""Plot the historical close prices"""
+# Plot the historical close prices
 plotResults = statements.stock_price("AAPL", "2018-03-12", "2019-11-12")
 plt.plot([entry['close'] for entry in plotResults])
 plt.ylabel("Price")

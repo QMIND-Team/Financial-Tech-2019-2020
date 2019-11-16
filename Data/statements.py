@@ -43,15 +43,15 @@ def sector_info():
 
 
 def quarterly_price(ticker, date):
-    dateList = date.split("-")
-    realDate = datetime(int(dateList[0]), int(dateList[1]), int(dateList[2]))
-    realStart = realDate - timedelta(days=20)
-    realEnd = realDate + timedelta(days=20)
-    start = realStart.strftime("%Y-%m-%d")
-    end = realEnd.strftime("%Y-%m-%d")
-    priceResults = stock_price(ticker, start, end)
-    quarterTotal = 0
-    for entry in priceResults:
-        quarterTotal += entry['close']
-    quarterprice = quarterTotal/len(priceResults)
-    return quarterprice
+    date_list = date.split("-")
+    date_mid = datetime(int(date_list[0]), int(date_list[1]), int(date_list[2]))
+    start = date_mid - timedelta(days=20)
+    end = date_mid + timedelta(days=20)
+    prices = stock_price(ticker, start.strftime("%Y-%m-%d"), end.strftime("%Y-%m-%d"))
+
+    quarter_total = 0.0
+    for entry in prices:
+        quarter_total += entry['close']
+
+    quarter_price = quarter_total / len(prices)
+    return quarter_price
