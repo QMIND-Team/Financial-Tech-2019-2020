@@ -1,4 +1,4 @@
-import statements as statements
+import Data.statements as statements
 import matplotlib.pyplot as plt
 
 result = statements.sector_info()

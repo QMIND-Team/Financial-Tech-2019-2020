@@ -41,6 +41,7 @@ def sector_info():
     output = resp.json()
     return output['sectorPerformance']
 
+
 def quarterly_price(ticker, date):
     dateList = date.split("-")
     realDate = datetime(int(dateList[0]), int(dateList[1]), int(dateList[2]))
