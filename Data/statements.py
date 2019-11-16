@@ -1,9 +1,11 @@
 # Simple program that tries out the financialmodelprep API.
 import requests
+from datetime import datetime
+from datetime import timedelta
 statement_params = {'period': 'quarter'}
 
 
-def income_statement(ticker):        
+def income_statement(ticker):
     url = "https://financialmodelingprep.com/api/v3/financials/income-statement/" + ticker
     resp = requests.get(url=url, params=statement_params)
     output = resp.json()
@@ -38,3 +40,17 @@ def sector_info():
     resp = requests.get(url=url)
     output = resp.json()
     return output['sectorPerformance']
+
+def quarterly_price(ticker, date):
+    dateList = date.split("-")
+    realDate = datetime(int(dateList[0]), int(dateList[1]), int(dateList[2]))
+    realStart = realDate - timedelta(days=20)
+    realEnd = realDate + timedelta(days=20)
+    start = realStart.strftime("%Y-%m-%d")
+    end = realEnd.strftime("%Y-%m-%d")
+    priceResults = stock_price(ticker, start, end)
+    quarterTotal = 0
+    for entry in priceResults:
+        quarterTotal += entry['close']
+    quarterprice = quarterTotal/len(priceResults)
+    return quarterprice
