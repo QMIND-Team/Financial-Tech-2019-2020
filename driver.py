@@ -27,5 +27,5 @@ for idx, symbol in enumerate(result['Symbol'][:3]):
         print("Info not found for ticker: " + symbol, ", idx: ", str(idx))
 
 # Writing json to data.txt
-with open('data.txt', 'w') as outfile:
+with open('companies.json', 'w') as outfile:
     json.dump(data, outfile)
