@@ -2,6 +2,7 @@
 import requests
 from datetime import datetime
 from datetime import timedelta
+import matplotlib.pyplot as plt
 statement_params = {'period': 'quarter'}
 
 
@@ -33,6 +34,15 @@ def stock_price(ticker, start, end):
     resp = requests.get(url=url, params=time_param)
     output = resp.json()
     return output['historical']
+
+
+# Plot the historical close prices
+def plot_stock(ticker, start, end):
+    prices = stock_price(ticker, start, end)
+    plt.plot([entry['close'] for entry in prices])
+    plt.ylabel("Price")
+    plt.xlabel("Year")
+    plt.show()
 
 
 def sector_info():
