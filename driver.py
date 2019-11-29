@@ -3,8 +3,7 @@ import json
 import Statements.statements as statements
 
 result = pandas.read_csv('Data/companies.csv')
-data = {}
-data['companies'] = []
+data = {'companies': []}
 for idx, symbol in enumerate(result['Symbol'][:10]):
     try:
         income = statements.income_statement(symbol)
@@ -22,12 +21,12 @@ for idx, symbol in enumerate(result['Symbol'][:10]):
             price = statements.quarterly_price(symbol, entry["date"])
             stock_price.append(price)
         except:
-            print("    Error with " + str(symbol) + ", date: " + entry["date"])
-        
+            print("Error with " + str(symbol) + ", date: " + entry["date"])
+
     # Saving the company to companies    
-    company =   {'name':symbol, 'income_statement':income,
-                'balance_sheet': balance, 'cash_flow': cash_flow,
-                'stock_price': stock_price}
+    company = {'name': symbol, 'income_statement': income,
+               'balance_sheet': balance, 'cash_flow': cash_flow,
+               'stock_price': stock_price}
     data['companies'].append(company)
     print("Successfully read " + symbol + ", idx: " + str(idx))
 
