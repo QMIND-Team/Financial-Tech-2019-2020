@@ -8,7 +8,6 @@ from sklearn.metrics import mean_squared_error, r2_score
 # Load the diabetes dataset
 diabetes = datasets.load_diabetes()
 
-
 # Use only one feature
 diabetes_X = diabetes.data[:, np.newaxis, 2]
 
