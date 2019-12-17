@@ -3,7 +3,6 @@ import json
 import Statements.statements as statements
 
 result = pandas.read_csv('Data/companies.csv')
-<<<<<<< HEAD
 data = {}
 data['companies'] = []
 
@@ -16,10 +15,6 @@ for idx in range(len(result['Symbol'])):
         continue
 
     # Checks to make sure the company's statements exist
-=======
-data = {'companies': []}
-for idx, symbol in enumerate(result['Symbol'][:10]):
->>>>>>> c20d59101da88b9ddedc29321e901acbc5933b78
     try:
         income = statements.income_statement(symbol)
         balance = statements.balance_sheet(symbol)
@@ -36,7 +31,6 @@ for idx, symbol in enumerate(result['Symbol'][:10]):
             stock_price.append(price)
         except:
             print("Error with " + str(symbol) + ", date: " + entry["date"])
-<<<<<<< HEAD
     
     # Catch to check if all lists are the same length     
     if (len(income) == len(balance) and len(income) == len(cash_flow) and len(income) == len(stock_price)):
@@ -52,15 +46,6 @@ for idx, symbol in enumerate(result['Symbol'][:10]):
         print("Successfully read " + symbol + ", idx: " + str(idx))
     else:
         print('Uneven data lengths for ' + symbol + ", idx:" + str(idx))
-=======
-
-    # Saving the company to companies    
-    company = {'name': symbol, 'income_statement': income,
-               'balance_sheet': balance, 'cash_flow': cash_flow,
-               'stock_price': stock_price}
-    data['companies'].append(company)
-    print("Successfully read " + symbol + ", idx: " + str(idx))
->>>>>>> c20d59101da88b9ddedc29321e901acbc5933b78
 
 # Writing json to data.txt
 with open('Data/companies.json', 'w') as outfile:
