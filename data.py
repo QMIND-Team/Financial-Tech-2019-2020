@@ -40,6 +40,7 @@ for idx in range(len(result['Symbol'])):
                 'cash_flow': cash_flow,
                 'stock_price': stock_price
                 }
+
         data['companies'].append(company)
 
         print("Successfully read " + symbol + ", idx: " + str(idx))
