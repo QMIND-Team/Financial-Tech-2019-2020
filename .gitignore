@@ -4,6 +4,7 @@ env/
 
 # MacOS finder files
 .DS_Store
+.swp
 
 # Python cache
 __pycache__/
