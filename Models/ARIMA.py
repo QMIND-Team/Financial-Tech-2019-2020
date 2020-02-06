@@ -4,9 +4,9 @@ import json
 from pandas import read_csv
 from pandas import datetime
 from matplotlib import pyplot
+from sklearn.model_selection import train_test_split
 from statsmodels.tsa.arima_model import ARIMA
 from sklearn.metrics import mean_squared_error
-
 
 with open("../Data/companies.json") as file:
     # Load data from the json file
@@ -24,35 +24,31 @@ with open("../Data/companies.json") as file:
     # Reverse all the dates in the list
     quarter_dates.reverse()
     stocks.reverse()
-    
-    # Reserve half of the date data for training and testing
-    quarter_dates_train = np.array(quarter_dates[:-21])
-    quarter_dates_test = np.array(quarter_dates[-21:])
 
+    # Split data for training and testing
+    quarter_dates_train, quarter_dates_test, stocks_train, stocks_test = \
+        train_test_split(np.array(quarter_dates), np.array(stocks), test_size=0.40)
 
-    # Reserve half of the stock data for training and testing
-    stocks_train = np.array(stocks[:-21])
-    stocks_test = np.array(stocks[-21:])
+    history = [x for x in stocks_train]
 
+    predictions = list()
+    for t in range(len(stocks_test)):
+        # this model will be different on each iteration because we are appending our predictions to history
+        model = ARIMA(history, order=(5, 1, 0))
+        model_fit = model.fit(disp=0)
+        output = model_fit.forecast()
+        yhat = output[0]
+        predictions.append(yhat)
+        obs = stocks_test[t]
+        history.append(obs)
+        print('predicted=%f, expected=%f' % (yhat, obs))
+    error = mean_squared_error(stocks_test, predictions)
+    print('Test MSE: %.3f' % error)
 
-
-history = [x for x in stocks_train]
-
-predictions = list()
-for t in range(len(stocks_test)):
-    # this model will be different on each iteration because we are appending our predictions to history
-    model = ARIMA(history, order=(5, 1, 0))
-    model_fit = model.fit(disp=0)
-    output = model_fit.forecast()
-    yhat = output[0]
-    predictions.append(yhat)
-    obs = stocks_test[t]
-    history.append(obs)
-    print('predicted=%f, expected=%f' % (yhat, obs))
-error = mean_squared_error(stocks_test, predictions)
-print('Test MSE: %.3f' % error)
-
-# plot
-pyplot.plot(stocks_test)
-pyplot.plot(predictions, color='red')
-pyplot.show()
+    # plot
+    pyplot.plot(stocks_test, label="Actual values")
+    pyplot.plot(predictions, color='red', label="Prediction")
+    pyplot.xlabel("Date")
+    pyplot.ylabel("Stock Price ($)")
+    pyplot.legend()
+    pyplot.show()
